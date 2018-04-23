@@ -1,15 +1,17 @@
 <h1>Book music studio</h1>
 
-
+{% if flag %}
+     <p>Studio already booked.</p>
+{% endif %}
     Select theatre, date and time:
-<form method="post" >{% csrf_token %}
-    <select>
+<form method="post" action="add/">{% csrf_token %}
+    <select name = "theatre">
         {% for t in theatre %}
         <option value="{{t}}">{{t}}</option>
         {% endfor %}
     </select>
         
-  <select>
+  <select name = "day">
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>
@@ -43,7 +45,7 @@
   <option value="31">31</option>
 </select>
 
-<select>
+<select name = "month">
   <option value="1">Jan</option>
   <option value="2">Feb</option>
   <option value="3">March</option>
@@ -58,7 +60,7 @@
   <option value="12">Dec</option>
 </select>
 
-<select>
+<select name = "time">
   <option value="10">10:00-11:00</option>
   <option value="11">11:00-12:00</option>
   <option value="12">12:00-13:00</option>
@@ -69,5 +71,5 @@
   <option value="17">17:00-18:00</option>
 </select>
 
-<input type="submit" name="add" class="button" value="Book">
+<input type="submit" name="addbutton" class="button" value="Book">
 </form>
