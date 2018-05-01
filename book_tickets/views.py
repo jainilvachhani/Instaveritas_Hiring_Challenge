@@ -8,10 +8,16 @@ import urllib
 # Create your views here.
 
 
-def post_list(request, flag=False):
+def post_list(request, flag=False, query = False):
     theatre =  Theatre.objects.all()
     #flag = False
-    return render(request, 'book_tickets/post_list.html', {'theatre':theatre, 'flag': flag})
+    return render(request, 'book_tickets/post_list.html', {'theatre':theatre, 'flag': flag, 'query': query,})
+    
+def post(request,flag,query):
+    theatre =  Theatre.objects.all()
+    #flag = False
+    return render(request, 'book_tickets/post.html', {'theatre':theatre, 'flag': flag, 'query': query,})
+    
     
 def add(request):
     if request.method == 'POST':
@@ -26,6 +32,18 @@ def add(request):
             #kwargs['flag'] = True
             flag = True
             print("No cant's do")
+            return post(request, True, False)
+            
         else:
             Book.objects.create(theatre_name = theatre, timeslot = time, date = d)
-        return redirect('post_list')
+        return post(request, False, False)
+        
+def search(request):
+    if request.method == 'POST':
+        query = request.POST.get('query')
+        query = Theatre.objects.filter(theatre_name = query)
+        if(query.exists()):
+            return post(request, False, True)
+        else:
+            return post(request, False, True)
+        
